@@ -1,100 +1,65 @@
-import client from './db/client.js';
-import { users, recipes, categories, comments } from './db/seedData.js';
+//seed.js
 
-//creating a function to drop existing tables
-async function dropTables() {
-    try {
-      await client.connect();
-  
-      // Drop tables
-      await client.query('DROP TABLE IF EXISTS comments CASCADE');
-      await client.query('DROP TABLE IF EXISTS recipes CASCADE');
-      await client.query('DROP TABLE IF EXISTS categories CASCADE');
-      await client.query('DROP TABLE IF EXISTS users CASCADE');
-  
-      console.log('Tables dropped successfully');
-    } catch (error) {
-      console.error('Error dropping tables:', error);
-    } finally {
-      await client.end();
-    }
-  }
-  //Creating  a function to create tables with the right data types and restrictions:
-  async function createTables() {
-    try {
-      await client.connect();
-  
-      // Create tables
-      await client.query(`
-        CREATE TABLE IF NOT EXISTS users (
-          id SERIAL PRIMARY KEY,
-          username VARCHAR(255) NOT NULL,
-          email VARCHAR(255) NOT NULL,
-          password VARCHAR(255) NOT NULL
-        )
-      `);
-      await client.query(`
-        CREATE TABLE IF NOT EXISTS recipes (
-          id SERIAL PRIMARY KEY,
-          userId INTEGER REFERENCES users(id),
-          title VARCHAR(255) NOT NULL,
-          description TEXT,
-          ingredients TEXT[],
-          instructions TEXT,
-          cookingTime INTEGER
-        )
-      `);
-      await client.query(`
-        CREATE TABLE IF NOT EXISTS categories (
-          id SERIAL PRIMARY KEY,
-          name VARCHAR(255) NOT NULL
-        )
-      `);
-      await client.query(`
-        CREATE TABLE IF NOT EXISTS comments (
-          id SERIAL PRIMARY KEY,
-          userId INTEGER REFERENCES users(id),
-          recipeId INTEGER REFERENCES recipes(id),
-          commentText TEXT
-        )
-      `);
-  
-      console.log('Tables created successfully');
-    } catch (error) {
-      console.error('Error creating tables:', error);
-    } finally {
-      await client.end();
-    }
-  }
-  
-//Create a function to populate the tables:
+const client = require('./client');
+const { users, recipes, categories, comments } = require('./seedData');
 
-  async function populateTables() {
-    try {
-      await client.connect();
-  
-      // Import functions and routes for populating tables
-      // Example:
-      // await import('./DB/populateUsers.js').then((module) => module.default());
-      // await import('./DB/populateRecipes.js').then((module) => module.default());
-      // await import('./DB/populateCategories.js').then((module) => module.default());
-      // await import('./DB/populateComments.js').then((module) => module.default());
-  
-      console.log('Tables populated successfully');
-    } catch (error) {
-      console.error('Error populating tables:', error);
-    } finally {
-      await client.end();
-    }
-  }
+const dropTables = `
+  DROP TABLE IF EXISTS comments CASCADE;
+  DROP TABLE IF EXISTS recipes CASCADE;
+  DROP TABLE IF EXISTS categories CASCADE;
+  DROP TABLE IF EXISTS users CASCADE;
+`;
 
-  //Call the functions in the desired order:
-  async function seed() {
-    await dropTables();
-    await createTables();
-    await populateTables();
-  }
-  
-  seed();
-  
-  
+const createTables = `
+  CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+  );
+
+  CREATE TABLE recipes (
+    recipe_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(user_id) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    ingredients TEXT NOT NULL,
+    instructions TEXT NOT NULL,
+    cooking_time INTEGER NOT NULL
+  );
+
+  CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+  );
+
+  CREATE TABLE comments (
+    comment_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(user_id) NOT NULL,
+    recipe_id INTEGER REFERENCES recipes(recipe_id) NOT NULL,
+    comment_text TEXT NOT NULL
+  );
+`;
+
+const populateTables = `
+  INSERT INTO users (username, email, password)
+  VALUES ${users.map((user) => `('${user.username}', '${user.email}', '${user.password}')`).join(',')};
+
+  INSERT INTO categories (name)
+  VALUES ${categories.map((category) => `('${category.name}')`).join(',')};
+
+  INSERT INTO recipes (user_id, title, description, ingredients, instructions, cooking_time)
+  VALUES ${recipes.map((recipe) => `(${recipe.userId}, '${recipe.title}', '${recipe.description}', '${recipe.ingredients}', '${recipe.instructions}', ${recipe.cookingTime})`).join(',')};
+
+  INSERT INTO comments (user_id, recipe_id, comment_text)
+  VALUES ${comments.map((comment) => `(${comment.userId}, ${comment.recipeId}, '${comment.commentText}')`).join(',')};
+`;
+
+// client.connect();
+
+client.query(dropTables)
+  .then(() => client.query(createTables))
+  .then(() => client.query(populateTables))
+  .then(() => console.log('Tables seeded'))
+  .catch((err) => console.error(err))
+  .finally(() => client.end());
