@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 const dbName = "cookbook"; 
-// const client = new Client(`postgres://localhost:54321/${dbName}`);
+// const client = new Client(`postgres://localhost:5432/${dbName}`);
 
 
 const client = new Client({
@@ -8,7 +8,7 @@ const client = new Client({
   host: 'localhost',
   database: dbName,
   password: "postgres",
-  port: 54321,
+  port: 5432,
 });
 
 

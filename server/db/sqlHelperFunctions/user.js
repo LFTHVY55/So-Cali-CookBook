@@ -1,6 +1,6 @@
 const client = require("../client");
 const bcrypt = require('bcrypt');
-
+const { handleUniqueKeyErrors } = require("../errorHandlers")
 
 // Function to retrieve all users from the database
 async function getAllUsers() {
@@ -43,30 +43,27 @@ async function getUserById(userId) {
 }
 
 
+
+
+
 async function createUser(data) {
   const { username, email, password } = data;
   const hashedPassword = await bcrypt.hash(password, 10);
-
 
   const query = 'INSERT INTO users(username, email, password) VALUES($1, $2, $3) RETURNING *';
   const values = [username, email, hashedPassword];
 
   try {
     const result = await client.query(query, values);
-
-
     const updatedUser = result?.rows[0];
     if (!updatedUser) {
-
       throw { message: `Error Creating User`, status: 404 };
     }
-
 
     return updatedUser;
 
   } catch (error) {
-
-    throw error;
+    handleUniqueKeyErrors(error, "User");
   }
 }
 
