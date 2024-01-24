@@ -61,6 +61,43 @@ async function getRecipeById(recipeId) {
 
 }
 
+
+
+// Function to retrieve a recipe by USER ID
+async function getRecipeByUserId(userId) {
+
+  const query = `
+  SELECT
+  recipe_id,
+  title,
+  description,
+  ingredients,
+  instructions,
+  cooking_time
+FROM
+  recipes
+WHERE
+  user_id = $1;
+  `;
+  const values = [userId];
+
+  try {
+    const result = await client.query(query, values);
+
+    const recipes = result?.rows;
+    if (!recipes) {
+
+      throw { message: `Not found`, status: 404 };
+    }
+    return recipes;
+  } catch (error) {
+    throw error;
+  }
+
+}
+
+
+
 async function createRecipe(data) {
   const { user_id, title, description, ingredients, instructions, cooking_time } = data;
 
@@ -134,6 +171,7 @@ module.exports = {
   getAllRecipes,
   createRecipe,
   updateRecipe,
+  getRecipeByUserId,
   getRecipeById,
   deleteRecipe,
 };

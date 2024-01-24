@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllRecipes, getRecipeById, createRecipe, updateRecipe, deleteRecipe } = require('../db/sqlHelperFunctions/recipes');
+const { getAllRecipes, getRecipeById, createRecipe, updateRecipe, deleteRecipe, getRecipeByUserId } = require('../db/sqlHelperFunctions/recipes');
 
 
 router.get('/', async (req, res) => {
@@ -19,6 +19,20 @@ router.get('/:id', async (req, res) => {
   try {
     const recipe = await getRecipeById(id);
     res.send({ recipe })
+  } catch (error) {
+    res.status(error.status || 500).json({ error });
+  }
+
+});
+
+
+
+
+router.get('/accountDetail/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const recipes = await getRecipeByUserId(id);
+    res.send({ recipes })
   } catch (error) {
     res.status(error.status || 500).json({ error });
   }
