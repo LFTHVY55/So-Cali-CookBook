@@ -8,8 +8,7 @@ function AuthGuard({
 }) {
     const navigate = useNavigate();
     const user = useSelector(state => state.user)
-    // const isAuthenticated = user?.isLoggedIn && user?.token && user?.token !== '';
-    const isAuthenticated = true;
+    const isAuthenticated = user?.isLoggedIn && user?.currentUser?.user_id;
     useEffect(() => {
         if (!isAuthenticated) {
             navigate('/login');

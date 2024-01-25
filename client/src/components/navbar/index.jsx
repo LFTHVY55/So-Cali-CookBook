@@ -62,7 +62,7 @@ const Navbar = () => {
                       <hr className="dropdown-divider" />
                     </li>
 
-                    {user?.isLoggedIn && user?.token && user?.token !== "" ?
+                    {user?.isLoggedIn?
 
 
                       <li>

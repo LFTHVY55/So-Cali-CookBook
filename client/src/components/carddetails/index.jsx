@@ -1,5 +1,5 @@
 import React from "react";
-import BooksCard from "../bookscard";
+import RecipeCard from "../recipecard";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 const BookCardContainer = ({ recipe, user }) => {
@@ -17,7 +17,7 @@ const BookCardContainer = ({ recipe, user }) => {
 
       <div className="row pt-5 gy-5 pb-5">
         <div className="col-lg-8 col-md-8 col-sm-12 col-12 mx-auto">
-          <BooksCard details recipe={recipe} user={user} acount={false} />
+          <RecipeCard details recipe={recipe} user={user} acount={false} />
         </div>
       </div>
     </div>
