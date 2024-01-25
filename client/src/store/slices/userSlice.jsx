@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { registerUser, loginUser, accountDetails } from '../actions/userAction'
+import { deleteRecipe } from '../actions/recipeAction'
 
 
 const initialState = {
@@ -32,8 +33,8 @@ export const postSlice = createSlice({
     },
 
     logout: (state, action) => {
-      state.alert = { isAlert: false, message: "" }
       state.isLoggedIn = false
+      state.currentUser = {}
       state.token = null
     }
 
@@ -53,7 +54,6 @@ export const postSlice = createSlice({
       console.log("fulfilleddddddddddddd", action.payload)
       state.isLoading = false;
       state.isLoggedIn = true;
-      state.token = action.payload?.data?.token;
 
     })
     builder.addCase(registerUser.rejected, (state, action) => {
@@ -76,14 +76,12 @@ export const postSlice = createSlice({
       console.log("fulfilleddddddddddddd", action.payload)
       state.isLoading = false;
       state.isLoggedIn = true;
-      state.token = action.payload?.data?.token;
+      state.currentUser = action.payload?.data?.user;
 
     })
     builder.addCase(loginUser.rejected, (state, action) => {
       console.log("rejectedddddddddddd", action.payload)
-
       state.isLoading = false;
-      state.alert = { isAlert: true, message: action.payload?.message };
     })
 
 
@@ -98,15 +96,24 @@ export const postSlice = createSlice({
     })
     builder.addCase(accountDetails.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.isLoggedIn = true;
-      state.currentUser = action.payload?.data;
+      state.currentUser = { ...state.currentUser, recipes: action.payload.data?.recipes }
 
     })
     builder.addCase(accountDetails.rejected, (state, action) => {
       state.isLoading = false;
-      state.alert = { isAlert: true, message: action.payload?.message };
 
     })
+
+
+
+    // delete Recipe
+
+    builder.addCase(deleteRecipe.fulfilled, (state, action) => {
+      state.currentUser = { ...state.currentUser, recipes: state?.currentUser?.recipes?.filter(v => v.recipe_id !== action.payload?.recipe?.recipe_id) }
+
+    })
+
+
 
 
   }

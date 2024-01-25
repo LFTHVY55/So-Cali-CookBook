@@ -51,3 +51,14 @@ export const updateRecipe = createAsyncThunk('recipe/updateRecipe', async (info,
 })
 
 
+
+export const createRecipe = createAsyncThunk('recipe/createRecipe', async (info, { rejectWithValue }) => {
+    try {
+        const { data } = await axios.post(`${server_url}/recipe`, info);
+        return data;
+    } catch (error) {
+
+        return rejectWithValue(error.response?.data);
+    }
+})
+

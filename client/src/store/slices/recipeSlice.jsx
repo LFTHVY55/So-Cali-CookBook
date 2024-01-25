@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getRecipesList, getRecipeDetails, deleteRecipe, updateRecipe} from '../actions/recipeAction'
-
+import { getRecipesList, getRecipeDetails, deleteRecipe, createRecipe } from '../actions/recipeAction'
 
 const initialState = {
     isLoading: false,
@@ -28,7 +27,7 @@ export const counterSlice = createSlice({
             state.alert = { isAlert: false, message: "" }
         },
 
-        searchBookList: (state, action) => {
+        searchRecipeList: (state, action) => {
             const { searchQuery } = action.payload;
             state.recipesSearch = state.recipes?.filter((recipe) =>
                 recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -36,7 +35,7 @@ export const counterSlice = createSlice({
         },
 
 
-        getAllBooks: (state, action) => {
+        getAllRecipes: (state, action) => {
             state.recipesSearch = state.recipes
         },
 
@@ -110,20 +109,16 @@ export const counterSlice = createSlice({
 
 
 
-        // checkout book / make Reservation
 
-
-
-
-        builder.addCase(updateRecipe.pending, (state, action) => {
+        builder.addCase(createRecipe.pending, (state, action) => {
             console.log("pendinggggg")
             state.isLoading = true;
         })
-        builder.addCase(updateRecipe.fulfilled, (state, action) => {
+        builder.addCase(createRecipe.fulfilled, (state, action) => {
             console.log("fulfilleddddddddddddd", action.payload)
             state.isLoading = false;
         })
-        builder.addCase(updateRecipe.rejected, (state, action) => {
+        builder.addCase(createRecipe.rejected, (state, action) => {
             console.log("rejectedddddddd", action.payload)
             state.isLoading = false;
         })
@@ -139,6 +134,6 @@ export const counterSlice = createSlice({
 
 
 
-export const { emptyBookAlert, searchBookList, getAllBooks } = counterSlice.actions
+export const { emptyBookAlert, searchRecipeList, getAllRecipes } = counterSlice.actions
 
 export default counterSlice.reducer

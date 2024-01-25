@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
-// import thunk from 'redux-thunk';
 import {
     FLUSH,
     REHYDRATE,
@@ -11,12 +10,12 @@ import {
     PURGE,
     REGISTER,
   } from 'redux-persist'
-import bookReducer from './slices/recipeSlice';
+import recipeReducer from './slices/recipeSlice';
 import userReducer from './slices/userSlice';
 
 
 const reducers = combineReducers({
-    recipe: bookReducer,
+    recipe: recipeReducer,
     user: userReducer,
 
 });
@@ -25,7 +24,7 @@ const reducers = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
-    useProxies: false // disable Proxies
+    useProxies: false 
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { registerUser } from "../../store/actions/userAction";
-
+import { toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,7 +15,8 @@ const Login = () => {
     values.preventDefault()
     const userInfo = {
       email: values?.target?.email?.value,
-      password: values?.target?.password?.value
+      password: values?.target?.password?.value,
+      username: values?.target?.username?.value
     }
 
     try {
@@ -24,12 +25,11 @@ const Login = () => {
       if ((res?.payload?.status === 200)) {
         navigate("/recipes");
       } else {
-
-        alert(res?.payload?.message)
+        toast.info(res?.payload?.error?.message || "Something went wrong")
       }
 
     } catch (error) {
-      console.log("yahahahahahhahahah");
+      toast.info(res?.payload?.error?.message || "Something went wrong")
     }
   };
 
@@ -52,6 +52,18 @@ const Login = () => {
                 <div className="row g-3">
                   <div className="col-12">
                     <input
+                      type="text"
+                      className="form-control"
+                      name="username"
+                      placeholder="Username"
+                      aria-label="Name"
+                      required
+                    />
+                  </div>
+
+
+                  <div className="col-12">
+                    <input
                       type="email"
                       className="form-control"
                       name="email"
@@ -60,6 +72,8 @@ const Login = () => {
                       required
                     />
                   </div>
+
+
                   <div className="col-12">
                     <input
                       type="password"
@@ -74,8 +88,8 @@ const Login = () => {
 
 
 
-                  <button style={{ width: "100%"}} type="submit" className="btn btn-success">
-                  {isLoading && <span className="spinner-border spinner-border-sm" style={{marginRight:"0.5rem"}} role="status" aria-hidden="true"></span>}
+                  <button style={{ width: "100%" }} type="submit" className="btn btn-success">
+                    {isLoading && <span className="spinner-border spinner-border-sm" style={{ marginRight: "0.5rem" }} role="status" aria-hidden="true"></span>}
 
                     Register
                   </button>
@@ -83,7 +97,7 @@ const Login = () => {
 
 
 
-                  <span style={{textAlign:"center"}}>or</span>
+                  <span style={{ textAlign: "center" }}>or</span>
 
 
 

@@ -1,7 +1,7 @@
 //seed.js
 
 const client = require('./client');
-const { users, recipes, categories, comments } = require('./seedData');
+const { users, recipes, categories, comments } = require('./seedData');cd 
 
 const dropTables = `
   DROP TABLE IF EXISTS comments CASCADE;

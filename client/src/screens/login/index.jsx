@@ -2,6 +2,7 @@ import { React } from "react";
 import { loginUser } from "../../store/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,15 +20,15 @@ const Login = () => {
 
     try {
       const res = await dispatch(loginUser(userInfo));
+
       if ((res.payload?.status === 200)) {
         navigate("/recipes");
-      }else{
-        
-        alert("Incorrect Username or Password!")
+      } else {
+        toast.info(res.payload?.error?.message || "Something went wrong")
       }
 
     } catch (error) {
-      console.log("yahahahahahhahahah");
+      toast.info(res.payload?.error?.message || "Something went wrong")
     }
   };
 
@@ -74,15 +75,15 @@ const Login = () => {
 
 
 
-                    <button style={{ width: "100%"}}  type="submit" className="btn btn-success px-4">
-                    {isLoading && <span className="spinner-border spinner-border-sm" style={{marginRight:"0.5rem"}} role="status" aria-hidden="true"></span>}
+                  <button style={{ width: "100%" }} type="submit" className="btn btn-success px-4">
+                    {isLoading && <span className="spinner-border spinner-border-sm" style={{ marginRight: "0.5rem" }} role="status" aria-hidden="true"></span>}
 
-                      Login
-                    </button>
-                <span style={{textAlign:"center"}}>or</span>
+                    Login
+                  </button>
+                  <span style={{ textAlign: "center" }}>or</span>
 
 
-                    <button style={{ width: "100%" }} type="button" onClick={() => navigate("/recipes")} className="btn btn-outline-success">
+                  <button style={{ width: "100%" }} type="button" onClick={() => navigate("/recipes")} className="btn btn-outline-success">
                     View Recipes list
                   </button>
 

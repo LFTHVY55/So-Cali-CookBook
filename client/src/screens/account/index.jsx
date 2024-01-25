@@ -5,41 +5,24 @@ import Navbar from "../../components/navbar";
 import { useDispatch, useSelector } from "react-redux";
 // import { deleteReservation } from "../../store/actions/booksAction";
 import AuthGuard from "../../components/authGuard"
-
 import { accountDetails } from "../../store/actions/userAction";
 import { logout } from "../../store/slices/userSlice";
 function Account() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    // dispatch(getBooksList());
-  }, []);
 
 
   const user = useSelector((state) => state?.user);
-  const isLoading = useSelector((state) => state?.user?.isLoading || state?.book?.isLoading);
-
-  const returnBook = async (id) => {
-    if (user.token) {
-      const headers = { headers: { "Authorization": `Bearer ${user.token}` } }
-      // await dispatch(deleteReservation({ id, headers }))
-      await dispatch(accountDetails(headers.headers))
-    } else {
-      dispatch(logout())
-    }
-  }
-
-
-
-
+  const isLoading = useSelector((state) => state?.user?.isLoading);
 
   useEffect(() => {
-    if (user.token) {
-      const headers = { headers: { Authorization: `Bearer ${user.token}` } };
-      dispatch(accountDetails(headers.headers));
+    if (user.isLoggedIn) {
+      dispatch(accountDetails(user?.currentUser?.user_id));
     } else {
       dispatch(logout());
     }
   }, []);
+
+
   return (
 
     <AuthGuard>
@@ -54,9 +37,9 @@ function Account() {
           :
 
           <CardContainer
-            books={user?.currentUser?.books}
+            recipes={user?.currentUser?.recipes}
             user={user}
-            returnBook={returnBook}
+            // returnBook={returnBook}
             account={true}
           />
 
