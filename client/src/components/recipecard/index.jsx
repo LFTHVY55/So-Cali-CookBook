@@ -7,10 +7,9 @@ import { deleteRecipe } from "../../store/actions/recipeAction";
 const RecipeCard = ({ recipe, details, user, account, image }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   return (
     <div className="card" style={{ width: "100%" }}>
-      {image && <img class="card-img-top" style={{ width: "100%", height: "180px" }} src={image} alt="Recipe image" />}
+      {recipe?.image && <img class="card-img-top" style={{ width: "100%", height: "180px" }} src={recipe?.image} alt="Recipe image" />}
 
       {recipe?.user_id === user?.currentUser?.user_id && (
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -72,7 +71,7 @@ const RecipeCard = ({ recipe, details, user, account, image }) => {
             <p className="card-text">{recipe?.cooking_time} mins</p>
           </span>
 
-          <span className="d-flex justify-content-between align-items-center gap-1">
+          {!account && <span className="d-flex justify-content-between align-items-center gap-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -84,7 +83,7 @@ const RecipeCard = ({ recipe, details, user, account, image }) => {
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
             </svg>
             <p className="card-text">{recipe?.user_username}</p>
-          </span>
+          </span>}
         </div>
 
         {account && (

@@ -1,7 +1,7 @@
 //seed.js
 
 const client = require('./client');
-const { users, recipes, categories, comments } = require('./seedData');cd 
+const { users, recipes, categories, comments } = require('./seedData');
 
 const dropTables = `
   DROP TABLE IF EXISTS comments CASCADE;
@@ -25,6 +25,7 @@ const createTables = `
     description TEXT,
     ingredients TEXT NOT NULL,
     instructions TEXT NOT NULL,
+    image TEXT NOT NULL,
     cooking_time INTEGER NOT NULL
   );
 
@@ -48,8 +49,8 @@ const populateTables = `
   INSERT INTO categories (name)
   VALUES ${categories.map((category) => `('${category.name}')`).join(',')};
 
-  INSERT INTO recipes (user_id, title, description, ingredients, instructions, cooking_time)
-  VALUES ${recipes.map((recipe) => `(${recipe.userId}, '${recipe.title}', '${recipe.description}', '${recipe.ingredients}', '${recipe.instructions}', ${recipe.cookingTime})`).join(',')};
+  INSERT INTO recipes (user_id, title, description, ingredients, instructions, image, cooking_time)
+  VALUES ${recipes.map((recipe) => `(${recipe.userId}, '${recipe.title}', '${recipe.description}', '${recipe.ingredients}', '${recipe.instructions}', '${recipe.image}', ${recipe.cookingTime})`).join(',')};
 
   INSERT INTO comments (user_id, recipe_id, comment_text)
   VALUES ${comments.map((comment) => `(${comment.userId}, ${comment.recipeId}, '${comment.commentText}')`).join(',')};

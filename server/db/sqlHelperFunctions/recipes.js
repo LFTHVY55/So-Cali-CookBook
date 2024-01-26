@@ -73,6 +73,7 @@ async function getRecipeByUserId(userId) {
   description,
   ingredients,
   instructions,
+  image,
   cooking_time
 FROM
   recipes
@@ -99,10 +100,10 @@ WHERE
 
 
 async function createRecipe(data) {
-  const { user_id, title, description, ingredients, instructions, cooking_time } = data;
+  const { user_id, title, description, ingredients, instructions, cooking_time, image } = data;
 
-  const query = 'INSERT INTO Recipes(user_id, title, description, ingredients, instructions, cooking_time) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
-  const values = [user_id, title, description, ingredients, instructions, cooking_time];
+  const query = 'INSERT INTO Recipes(user_id, title, description, ingredients, instructions, cooking_time, image) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+  const values = [user_id, title, description, ingredients, instructions, cooking_time, image];
 
   try {
     const result = await client.query(query, values);
@@ -119,15 +120,15 @@ async function createRecipe(data) {
 
 
 async function updateRecipe(recipeId, data) {
-  const { user_id, title, description, ingredients, instructions, cooking_time } = data;
+  const { user_id, title, description, ingredients, instructions, cooking_time, image } = data;
 
   const query = `
     UPDATE Recipes
-    SET user_id = $1, title = $2, description = $3, ingredients = $4, instructions = $5, cooking_time = $6
-    WHERE recipe_id = $7
+    SET user_id = $1, title = $2, description = $3, ingredients = $4, instructions = $5, cooking_time = $6, image=$7
+    WHERE recipe_id = $8
     RETURNING *`;
 
-  const values = [user_id, title, description, ingredients, instructions, cooking_time, recipeId];
+  const values = [user_id, title, description, ingredients, instructions, cooking_time, image, recipeId];
 
   try {
     const result = await client.query(query, values);

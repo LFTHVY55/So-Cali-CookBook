@@ -10,7 +10,6 @@ const CardContainer = ({ recipes, account, user }) => {
   const handleSearch = (searchQuery) => {
     dispatch(searchRecipeList({ searchQuery }));
   };
-  const staticImages = ["https://www.thecookierookie.com/wp-content/uploads/2023/04/featured-chicken-flautas-recipe.jpg", "https://www.tasteofhome.com/wp-content/uploads/2018/01/Slow-Cooker-Beef-Carnitas_EXPS_THCA17_76880_A6_01_3b.jpg","https://www.ambitiouskitchen.com/wp-content/uploads/fly-images/31819/Best-Guacamole-Youll-Ever-Eat-4sq-500x500-c.jpg","https://www.seriouseats.com/thmb/rkmijvOtxOQyH3D8n2q8uc67XNk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2015__04__20150323-cocktails-vicky-wasik-margarita-c84b154e757d43688de15dc8f8ca0de9.jpg","https://themodernnonna.com/wp-content/uploads/2022/06/Elotes-PNG.png"]
 
 
   const navigate = useNavigate()
@@ -76,7 +75,7 @@ const CardContainer = ({ recipes, account, user }) => {
 
           recipes?.map((recipe, i) => (
             <div className="col-lg-4 col-md-6" key={i}>
-              <RecipeCard image={staticImages[Math.floor(Math.random() * staticImages.length)]} recipe={recipe} user={user} account={account} />
+              <RecipeCard recipe={recipe} user={user} account={account} />
             </div>
           ))
 
