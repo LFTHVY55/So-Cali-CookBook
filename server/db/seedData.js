@@ -78,21 +78,40 @@ const recipes = [
     userId: 1
   },
   {
-    title: 'Recipe 4',
-    description: 'This is recipe 4 description',
-    ingredients: 'ingredients 2',
-    instructions: 'instructions 2',
-    cookingTime: 120,
-    image:"https://www.seriouseats.com/thmb/rkmijvOtxOQyH3D8n2q8uc67XNk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2015__04__20150323-cocktails-vicky-wasik-margarita-c84b154e757d43688de15dc8f8ca0de9.jpg",
+    title: 'Lime Margarita',
+    description: 'Fresh Lime Margarita *click here for instructions*',
+    ingredients: [
+        '1/2 cup tequila',
+        '1/4 cup Triple Sec',
+        '1/4 cup lime juice',
+        '1/4 cup lemon juice',
+        '2 tablespoons superfine sugar',
+        '4 lime wedges',
+        '1 tablespoon kosher salt',
+        '1-1/3 cups crushed ice'
+    ],
+    instructions: 'In a pitcher, combine the first 5 ingredients; stir until sugar is dissolved. Moisten rims of 4 margarita or cocktail glasses with lime wedges. Sprinkle salt on a plate; dip rims in salt. Serve over crushed ice in prepared glasses.',
+    cookingTime: 10,
+    image: "https://www.seriouseats.com/thmb/rkmijvOtxOQyH3D8n2q8uc67XNk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2015__04__20150323-cocktails-vicky-wasik-margarita-c84b154e757d43688de15dc8f8ca0de9.jpg",
     userId: 2
   },
   {
-    title: 'Recipe 5',
-    description: 'This is recipe 5 description',
-    ingredients: 'ingredients 2',
-    instructions: 'instructions 2',
+    title: 'Street Corn',
+    description: 'Mexican style street corn *click here for instructions*',
+    ingredients: [
+        '6 medium ears sweet corn',
+        '1/4 cup sour cream',
+        '1/4 cup mayonnaise',
+        '1/4 cup minced fresh cilantro',
+        '1 teaspoon grated lime zest',
+        '2 tablespoons lime juice',
+        '2 garlic cloves, minced',
+        '6 tablespoons Cotija cheese',
+        '2 to 3 teaspoons chili powder'
+    ],
+    instructions: 'Step 1: Peel back the husks. Carefully peel back the corn husks until they’re about 1 inch away from the bottoms. Remove the silk by either using a produce brush and brushing the silks away under running water or rubbing the cob with a gloved hand until the silk falls off. Step 2: Wrap the corn. Rewrap each ear of corn in its husk and secure with butcher’s twine. You need butcher’s twine for this step because it’s oven-safe—regular string won’t work. You don’t want to worry about anything burning while your corn is cooking.Step 3: Soak the corn. In a Dutch oven, cover the corn with cold water. Let soak for 20 minutes and then drain. Step 4: Grill the corn While you’re waiting for the corn to soak, preheat your grill to medium heat (or 350°F). If you’re using a charcoal grill, cook the corn over direct heat. Place the corn on the grill and cover. Cook for 25 to 30 minutes, until the corn is tender, turning the ears of corn often. Step 5: Make the elotes mixture In a medium bowl, combine the sour cream, mayonnaise, cilantro, lime zest and juice. Peel back the husk on each ear of corn and spread the mixture generously over the kernels. Step 6: Top with Cotija and chili powder Sprinkle each ear of corn with Cotija cheese and chili powder and serve on a platter, or let everyone assemble an ear of corn so the toppings are to their liking. Elotes are best served immediately so the mixture remains nice and warm on the crisp corn.',
     cookingTime: 60,
-    image:"https://themodernnonna.com/wp-content/uploads/2022/06/Elotes-PNG.png",
+    image: "https://themodernnonna.com/wp-content/uploads/2022/06/Elotes-PNG.png",
     userId: 1
   }
 ];
