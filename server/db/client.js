@@ -8,7 +8,7 @@ const client = new Client({
   host: 'localhost',
   database: dbName,
   password: "postgres",
-  port: 54321,
+  port: 5432,
 });
 
 
